@@ -20,9 +20,18 @@ ISR (TIMER1_OVF_vect)
 {
 	/* Interrupt Aktion alle 2Hz*/
 	TCNT1 = 0x7a11;
-	PORTC ^= (1<<PINC6);
+	
+	if(!(PINL & (1<<PL0))&&((PINL & (1<<PL2)))){
+		return;		
+	}else{
+		cli();
+		wdt_enable (WDTO_15MS);
+		while (1);
+	}
 }
 void setup(){
+	DDRL &=!((1<<PL0)|(1<<PL2));
+	PORTL |= ((1<<PL0)|(1<<PL2));
 	m.speedLeft=0;
 	m.speedRight=0;
 	// Timer 1 konfigurieren
@@ -32,8 +41,7 @@ void setup(){
 	TCNT1 = 0x7a11;        // Timer nach obiger Rechnung vorbelegen
 	TCCR1B |= (1<< CS12);    // 256 als Prescale-Wert
 	TIMSK1 |= (1 << TOIE1);   // Timer Overflow Interrupt aktivieren
-	DDRC |= (1<<PINC6);
-	
+	DDRF |= (1<<PINF0);
 }
 
 
