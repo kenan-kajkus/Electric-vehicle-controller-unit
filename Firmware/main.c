@@ -14,6 +14,11 @@
 #define BAUTRATE 38400UL
 #include "Watchdog.h"
 char message[20];
+struct UART_message{
+	int dir;
+	int speedRight;
+	int speedLeft;
+	} uart_m;
 Motors m;
 
 ISR (TIMER1_OVF_vect)
@@ -71,17 +76,15 @@ void uart_gets(char* Buffer, uint8_t MaxLength){
 }
 void readUART(){
 	int dir = (int)message[0]-48;
-	if(dir!=m.dir){
-		m.dir = dir;
-		changeDir();
+	if(dir!=uart_m.dir){
+		uart_m.dir = dir;
 	}
 	//-48 for asci shift
 	int speed100= (int)message[2]-48;
 	int speed10= (int)message[3]-48;
 	int speed1= (int)message[4]-48;
-	
-	m.speedRight = speed100*100+speed10*10+speed1;
-	m.speedLeft = speed100*100+speed10*10+speed1;
+	uart_m.speedLeft = speed100*100+speed10*10+speed1;
+	uart_m.speedRight = speed100*100+speed10*10+speed1;
 	wohin = (int)message[6]-48;
 	
 }
@@ -112,7 +115,8 @@ int main(void)
 		watchdog_reset();
 		uart_gets(message,20);
 		readUART();
-		changeSpeed(m.speedLeft,m.speedRight);
+		changeDir(uart_m.dir);
+		changeSpeed(uart_m.speedLeft,uart_m.speedRight);
 		changeLenkung();
     }
 }
