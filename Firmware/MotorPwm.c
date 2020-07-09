@@ -37,7 +37,12 @@ void initPwmMotor(){
 	DDRE |= MOTOR_LEFT_PWM|MOTOR_RIGHT_PWM;
 }
 
-void changeSpeed(uint8_t left, uint8_t right){
+void changeSpeed(uint8_t speed){
+	changeSpeedLeft(speed);
+	changeSpeedRight(speed);
+}
+
+void changeSpeedLR(uint8_t left, uint8_t right){
 	changeSpeedLeft(left);
 	changeSpeedRight(right);
 }

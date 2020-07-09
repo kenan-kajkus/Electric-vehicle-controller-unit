@@ -10,11 +10,13 @@
 #include <avr/io.h>
 #include "uart.h"
 #include <avr/interrupt.h>
+#include "UartMessage.h"
 
 #define BAUTRATE 38400UL
 #include "Watchdog.h"
 char message[20];
 Motors m;
+UartMessage uartMessage;
 
 ISR (TIMER1_OVF_vect)
 {
@@ -104,7 +106,7 @@ int main(void)
 		watchdog_reset();
 		uart_gets(message,20);
 		readUART();
-		changeSpeed(m.speedLeft,m.speedRight);
+		changeSpeedLR(m.speedLeft,m.speedRight);
 		changeLenkung();
     }
 }

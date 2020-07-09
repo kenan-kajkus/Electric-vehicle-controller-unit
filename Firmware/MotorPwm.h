@@ -16,15 +16,17 @@
 #include <util/delay.h>
 #include "pins.h"
 
-typedef struct{
+typedef struct
+{
 		uint8_t speedLeft;
 		uint8_t speedRight;
 		uint8_t dir;
-	}Motors;
+}Motors;
 
 void initMotordriver();
 void initPwmMotor();
-void changeSpeed(uint8_t left, uint8_t right);
+void changeSpeed(uint8_t speed);
+void changeSpeedLR(uint8_t left, uint8_t right);
 void changeSpeedLeft(uint8_t a);
 void changeSpeedRight(uint8_t b);
 void changeDir();
