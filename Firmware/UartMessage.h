@@ -9,6 +9,8 @@
 #ifndef UARTMESSAGE_H_
 #define UARTMESSAGE_H_
 
+#include <stdint-gcc.h>
+
 #define TRIGGER_BUTTON 0x01
 #define JOYSTICK_BUTTON 0x02
 #define A_BUTTON 0x04
@@ -18,20 +20,6 @@
 #define BOOL7 0x40
 #define BOOL8 0x80
 
-/*
-	uint8_t buttons;
-
-	// Check TRIGGER_BUTTON
-	if ( buttons & TRIGGER_BUTTON)
-	// do something
-
-	// Set JOYSTICK_BUTTON
-	buttons |= JOYSTICK_BUTTON;
-
-	// Clear A_BUTTON
-	buttons &= ~A_BUTTON;
-*/
-
 struct UartMessage
 {
 	uint8_t magnet;
@@ -39,9 +27,11 @@ struct UartMessage
 	uint8_t joystick_Y;
 	uint8_t buttons;
 };
+typedef struct UartMessage UartMessage;
 
-uint8_t buttonState(UartMessage * uartMessage, uint8_t button)
-{
-	return uartMessage->buttons & button;
-}
+uint8_t buttonState(UartMessage * uartMessage, uint8_t button);
+
+void setButtonState(UartMessage * uartMessage, uint8_t button);
+
+void clearButtonState(UartMessage * uartMessage, uint8_t button);
 #endif /* UARTMESSAGE_H_ */
