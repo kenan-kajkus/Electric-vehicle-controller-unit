@@ -11,12 +11,12 @@
 #include "uart.h"
 #include <avr/interrupt.h>
 #include "UartMessage.h"
+#include "messageReader.h"
 
 #define BAUTRATE 38400UL
 #include "Watchdog.h"
 char message[20];
 Motors m;
-UartMessage uartMessage;
 
 ISR (TIMER1_OVF_vect)
 {
@@ -24,6 +24,7 @@ ISR (TIMER1_OVF_vect)
 	TCNT1 = 0x7a11;
 	PORTC ^= (1<<PINC6);
 }
+
 void setup(){
 	m.speedLeft=0;
 	m.speedRight=0;
@@ -37,7 +38,6 @@ void setup(){
 	DDRC |= (1<<PINC6);
 	
 }
-
 
 uint8_t uart_getc_wait(){
 	unsigned int c;
@@ -63,30 +63,16 @@ void uart_gets(char* Buffer, uint8_t MaxLength){
 	}
 	*Buffer = '\0';
 }
-void readUART(){
-	int dir = (int)message[0]-48;
-	if(dir!=m.dir){
-		m.dir = dir;
-		changeDir();
-	}
-	//-48 for asci shift
-	int speed100= (int)message[2]-48;
-	int speed10= (int)message[3]-48;
-	int speed1= (int)message[4]-48;
-	
-	m.speedRight = speed100*100+speed10*10+speed1;
-	m.speedLeft = speed100*100+speed10*10+speed1;
-	wohin = (int)message[6]-48;
-	
-}
+
+
 void startupCheck(){
 	do
 	{
 		uart_gets(message,20);
-		readUART();
 	} while (m.speedLeft!=0);
 	
 }
+
 int main(void)
 {	
 	setup();
@@ -105,7 +91,7 @@ int main(void)
 	{
 		watchdog_reset();
 		uart_gets(message,20);
-		readUART();
+		parseMessage(message,0);
 		changeSpeedLR(m.speedLeft,m.speedRight);
 		changeLenkung();
     }
