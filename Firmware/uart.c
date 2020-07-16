@@ -515,6 +515,45 @@ unsigned int uart_getc(void)
 
 
 /*************************************************************************
+Function: uart_getc_wait()
+Purpose:  return byte from ringbuffer and waits until data is received  
+Returns:  lower byte:  received byte from ringbuffer
+          higher byte: last receive error
+**************************************************************************/
+uint8_t uart_getc_wait(){
+	unsigned int c;
+	do
+	{
+		c = uart_getc();
+	} while (c == UART_NO_DATA);
+
+	return (uint8_t) c;
+}/* uart_getc_wait */
+
+
+/*************************************************************************
+Function: uart_gets()
+Purpose:  writes string from ringbuffer until endline into provided buffer
+of size MaxLength
+Returns:  
+**************************************************************************/
+void uart_gets(char* Buffer, uint8_t MaxLength){
+	uint8_t nextChar;
+	uint8_t StringLength = 0;
+	
+	nextChar = uart_getc_wait();
+	
+	while (nextChar != '\n' && StringLength < MaxLength-1 )
+	{
+		*Buffer++ = nextChar;
+		StringLength++;
+		nextChar = uart_getc_wait();
+	}
+	*Buffer = '\0';
+}/* uart_gets */
+
+
+/*************************************************************************
 Function: uart_putc()
 Purpose:  write byte to ringbuffer for transmitting via UART
 Input:    byte to be transmitted

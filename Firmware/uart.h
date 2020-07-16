@@ -145,6 +145,10 @@ extern void uart_init(unsigned int baudrate);
  */
 extern unsigned int uart_getc(void);
 
+extern uint8_t uart_getc_wait();
+
+extern void uart_gets(char* Buffer, uint8_t MaxLength);
+
 
 /**
  *  @brief   Put byte to ringbuffer for transmitting via UART
