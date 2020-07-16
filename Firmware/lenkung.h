@@ -9,15 +9,13 @@
 #ifndef LENKUNG_H_
 #define LENKUNG_H_
 
-#define F_CPU 16000000UL
-
 #include <avr/io.h>
 #include <stdint.h>
 #include <util/delay.h>
 #include "pins.h"
+#include "UartMessage.h"
 
-void initLenkung();
-void initLenkungPwm();
+void initLenkungPwm(UartMessage * message);
 void changeLenkung();
 
 extern int wohin;

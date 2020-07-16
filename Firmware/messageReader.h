@@ -14,6 +14,7 @@
 UartMessage * uartMessage;
 
 void parseMessage(char * rawData, int rawDataLength);
+void setMessageValues(UartMessage * message);
 int unreadUartMessage();
 UartMessage * getUartMessage();
 #endif /* MESSAGEPARSER_H_ */

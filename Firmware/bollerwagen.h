@@ -1,7 +1,6 @@
 
 #ifndef BOLLERWAGEN
-#define BOLLERWAGEN 
-#define F_CPU 16000000UL// Clock Speed
+#define BOLLERWAGEN
 
 #include <avr/io.h>
 #include <avr/interrupt.h>

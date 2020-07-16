@@ -19,6 +19,11 @@
 	}
  }
 
+ void setMessageValues(UartMessage * message)
+ {
+	
+ }
+
  int unreadUartMessage()
  {
 	return newMessage;

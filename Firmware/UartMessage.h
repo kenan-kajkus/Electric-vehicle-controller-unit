@@ -30,6 +30,12 @@ uint8_t buttonState(UartMessage * uartMessage, uint8_t button);
 
 void setUartMessage(UartMessage * uartMessage, uint8_t magVal, uint8_t stickXVal, uint8_t stickYVal);
 
+uint8_t getJoystickX(UartMessage * uartMessage);
+
+uint8_t getJoystickY(UartMessage * uartMessage);
+
+uint8_t getMagSensor(UartMessage * UartMessage);
+
 void setButtonState(UartMessage * uartMessage, uint8_t button);
 
 void clearButtonState(UartMessage * uartMessage, uint8_t button);

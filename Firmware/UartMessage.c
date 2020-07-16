@@ -24,6 +24,22 @@
 	uartMessage->joystick_Y = stickYVal;
  }
 
+ uint8_t getJoystickX(UartMessage * uartMessage)
+ {
+	return uartMessage->joystick_X;
+ }
+
+ uint8_t getJoystickY(UartMessage * uartMessage)
+ {
+	 return uartMessage->joystick_Y;
+ }
+
+ 
+ uint8_t getMagSensor(UartMessage * uartMessage)
+ {
+	return uartMessage->magnet;
+ }
+
  uint8_t buttonState(UartMessage * uartMessage, uint8_t button)
  {
 	 return uartMessage->buttons & button;
