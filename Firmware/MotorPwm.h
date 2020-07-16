@@ -15,20 +15,6 @@
 #include "pins.h"
 #include "UartMessage.h"
 
-typedef enum
-{
-	motor_forward,
-	motor_backward,
-	motor_hold
-}Direction;
-
-typedef struct
-{
-		uint8_t speedLeft;
-		uint8_t speedRight;
-		Direction direction;
-}Motors;
-
 void initMotordriver(UartMessage * uartMessage);
 void initPwmMotor();
 void changeSpeed();
