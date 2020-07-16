@@ -25,6 +25,8 @@
 
 #User Specific Files
 *.atsuo
+*.componentinfo.xml
+*.atsln
 
 ### C ###
 # Prerequisites
